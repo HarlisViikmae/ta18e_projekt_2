@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Snake_game_t118e"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="570">
-    <Grid>
-        <Canvas Background="LightGreen" Margin="0,0,112,0">
-            <Ellipse Height="25" Width="25" Fill="Black" Canvas.Left="60" Canvas.Bottom="60" Name="Snek">
+        Title="MainWindow" Height="500" Width="570">
+    <Grid Margin="0,0,2,0">
+        <Canvas Background="LightGreen" Width="450" Height="450" Margin="0,0,122,19">
+            <Ellipse Height="25" Width="25" Fill="Black" Canvas.Left="50" Canvas.Bottom="350" Name="Snek">
             </Ellipse>
             <Button Content="Up" Height="30" Canvas.Left="492" Canvas.Top="348" Width="30" RenderTransformOrigin="1.13,0.461" Click="btn_up"/>
             <Button Content="Down" Height="30" Canvas.Left="492" Canvas.Top="383" Width="30" RenderTransformOrigin="1.13,0.461" Click="btn_down"/>

@@ -26,9 +26,13 @@ namespace Snake_game_t118e
         bool car = false;
         double x;
         double y;
+        Rectangle[] recArray = new Rectangle[100];
+        List<Rectangle> recList = new List<Rectangle>();
+
         public MainWindow()
         {
             InitializeComponent();
+
         }
 
         private void btn_cartgl(object sender, RoutedEventArgs e)
@@ -39,16 +43,19 @@ namespace Snake_game_t118e
         private void btn_startsreset(object sender, RoutedEventArgs e)
         {
             tick(dir);
+            List<Rectangle> recList = new List<Rectangle>();
+            for (var ix = 0; ix < 100; ix++)
+                recList.Add(new Rectangle { Width = 10, Height = 10, Fill = Brushes.Black });
         }
 
         private void tick(int dire)
         {
             y = Canvas.GetBottom(Snek);
             x = Canvas.GetLeft(Snek);
-            if (dire%4 == 0) x += 10;
-            else if (dire%4 == 1) y += 10;
-            else if (dire%4 == 2) x -= 10;
-            else if (dire%4 == 3) y -= 10;
+            if (dire%4 == 0) x += 25;
+            else if (dire%4 == 1) y += 25;
+            else if (dire%4 == 2) x -= 25;
+            else if (dire%4 == 3) y -= 25;
             //if (x < 0 || x > 450||y < 0|| y > 450) end();
             Canvas.SetLeft(Snek, x);
 
