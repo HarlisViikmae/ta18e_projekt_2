@@ -24,7 +24,8 @@ namespace Snake_game_t118e
     {
         int dir = 0;
         bool car = false;
-        double x, y;
+        double x;
+        double y;
         public MainWindow()
         {
             InitializeComponent();
@@ -33,8 +34,6 @@ namespace Snake_game_t118e
         private void btn_cartgl(object sender, RoutedEventArgs e)
         {
             car = !car;
-
-
         }
 
         private void btn_startsreset(object sender, RoutedEventArgs e)
@@ -50,31 +49,38 @@ namespace Snake_game_t118e
             else if (dire%4 == 1) y += 10;
             else if (dire%4 == 2) x -= 10;
             else if (dire%4 == 3) y -= 10;
-            if (x < 0 || x > 450||y < 0|| y > 450) end();
+            //if (x < 0 || x > 450||y < 0|| y > 450) end();
             Canvas.SetLeft(Snek, x);
 
             Canvas.SetBottom(Snek, y);
-
         }
 
         private void btn_right(object sender, RoutedEventArgs e)
         {
-            if (!car) dir = 0;
+            if (!car)
+                dir = 0;
+            else
+                dir--;
         }
 
         private void btn_up(object sender, RoutedEventArgs e)
         {
-            if (!car) dir = 1;
+            if (!car)
+                dir = 1;
         }
 
         private void btn_left(object sender, RoutedEventArgs e)
         {
-            if (!car) dir = 2;
+            if (!car)
+                dir = 2;
+            else
+                dir++;
         }
 
         private void btn_down(object sender, RoutedEventArgs e)
         {
-            if (!car) dir = 3;
+            if (!car)
+                dir = 3;
         }
 
         private void end()

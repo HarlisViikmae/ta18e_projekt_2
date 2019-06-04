@@ -8,7 +8,7 @@
         Title="MainWindow" Height="450" Width="570">
     <Grid>
         <Canvas Background="LightGreen" Margin="0,0,112,0">
-            <Ellipse Height="25" Width="25" Fill="Black" Canvas.Left="60" Canvas.Top="60" Name="Snek">
+            <Ellipse Height="25" Width="25" Fill="Black" Canvas.Left="60" Canvas.Bottom="60" Name="Snek">
             </Ellipse>
             <Button Content="Up" Height="30" Canvas.Left="492" Canvas.Top="348" Width="30" RenderTransformOrigin="1.13,0.461" Click="btn_up"/>
             <Button Content="Down" Height="30" Canvas.Left="492" Canvas.Top="383" Width="30" RenderTransformOrigin="1.13,0.461" Click="btn_down"/>
