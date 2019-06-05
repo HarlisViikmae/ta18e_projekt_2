@@ -8,8 +8,8 @@
         Title="MainWindow" Height="491.69" Width="570">
     <Grid Margin="0,0,2,0">
         <Canvas Background="LightGreen" Width="450" Height="450" Margin="0,0,122,19" Name="maal">
-            <Ellipse Height="25" Width="25" Fill="Black" Canvas.Left="50" Canvas.Bottom="350" Name="Snek" Panel.ZIndex="10">
-            </Ellipse>
+            <Rectangle Height="25" Width="25" Fill="Red" StrokeThickness="3" Stroke="Black" Canvas.Left="50" Canvas.Bottom="350" Name="Snek" Panel.ZIndex="10">
+            </Rectangle>
             <Button Content="Up" Height="30" Canvas.Left="492" Canvas.Top="348" Width="30" RenderTransformOrigin="1.13,0.461" Click="btn_up"/>
             <Button Content="Down" Height="30" Canvas.Left="492" Canvas.Top="383" Width="30" RenderTransformOrigin="1.13,0.461" Click="btn_down"/>
             <Button Content="Right" Height="30" Canvas.Left="527" Canvas.Top="383" Width="30" RenderTransformOrigin="1.13,0.461" Click="btn_right"/>

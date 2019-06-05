@@ -73,6 +73,7 @@ namespace Snake_game_t118e
         private void btn_cartgl(object sender, RoutedEventArgs e)
         {
             car = !car;
+            if (car) dir = dir % 4 + 10000;
         }
 
         private void btn_startsreset(object sender, RoutedEventArgs e)
@@ -131,6 +132,7 @@ namespace Snake_game_t118e
         }
         static void new_food()
         {
+
         }
     }
 }
