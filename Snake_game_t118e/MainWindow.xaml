@@ -17,5 +17,6 @@
             <Button Content="Togle'car'control" Height="30" Canvas.Left="457" Canvas.Top="313" Width="100" RenderTransformOrigin="1.13,0.461" Click="btn_cartgl"/>
             <Button Name="yeet"  Content="Start" Height="30" Canvas.Left="457" Canvas.Top="278" Width="100" RenderTransformOrigin="1.13,0.461" Click="btn_startsreset"/>
         </Canvas>
+        <TextBox HorizontalAlignment="Left" Height="55" Margin="455,10,0,0" TextWrapping="Wrap" Text="Click here to controll with keyboard" VerticalAlignment="Top" Width="95"/>
     </Grid>
 </Window>
