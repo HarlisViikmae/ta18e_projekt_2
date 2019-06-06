@@ -24,24 +24,33 @@ namespace Snake_game_t118e
     {
         int dir = 0;
         bool car = false;
-        double x;
-        double y;
+        int length = 1, transrect = 0, difficulty = 5;
+        double x, y;
+        double fx = 0, fy = 0;
+        int gridsize = 18;
+        int foodgen = 20;
         Rectangle[] recArray = new Rectangle[100];
         List<Rectangle> recList = new List<Rectangle>();
 
         public void Timer_Tick(object sender, EventArgs e)
         {
             tick(dir);
+            if (Canvas.GetLeft(Snek) == Canvas.GetLeft(Food)&& Canvas.GetBottom(Snek) == Canvas.GetBottom(Food))//growth of the snake
+            {
+                Food.Visibility = Visibility.Visible;
+            }
             
         }
 
         private DispatcherTimer timer;
         public MainWindow()//Setup
         {
+            recList.Add(new Rectangle { Width = 25, Height = 25, Fill = Brushes.Red, StrokeThickness = 3, Stroke = Brushes.Black, });// kuidas reclist[i] asukohta muuta?
+
             SolidColorBrush gridder = new SolidColorBrush();
             gridder.Color = Color.FromArgb(255, 10, 200, 10);
             InitializeComponent();
-            for (int j = 0; j < 18; j++)//creating backround grid
+            for (int j = 0; j < gridsize; j++)//creating backround grid
             {
                 for (int i = 0; i < 9; i++)
                 {
@@ -52,23 +61,18 @@ namespace Snake_game_t118e
 
                     maal.Children.Add(e);
                     y += 10;
-                    if(j%2==1)
-                    Canvas.SetLeft(e, i * 50);
+                    if (j % 2 == 1)
+                        Canvas.SetLeft(e, i * 50);
                     else
-                        Canvas.SetLeft(e, i * 50+25);
+                        Canvas.SetLeft(e, i * 50 + 25);
                     Canvas.SetTop(e, j * 25);
                 }
                 //Creating timer
                 timer = new DispatcherTimer();
-                timer.Interval = TimeSpan.FromSeconds(.5);
+                timer.Interval = TimeSpan.FromSeconds(.2);
                 timer.Tick += Timer_Tick;
-                timer.Tick += Timer_Tick1;
             }
-        }
 
-        private void Timer_Tick1(object sender, EventArgs e)
-        {
-            
         }
 
         private void btn_cartgl(object sender, RoutedEventArgs e)
@@ -85,19 +89,72 @@ namespace Snake_game_t118e
                     recList.Add(new Rectangle { Width = 10, Height = 10, Fill = Brushes.Black });
             */
         }
+
+
+
+
         //Void tick
         private void tick(int dire)
         {
             y = Canvas.GetBottom(Snek);
             x = Canvas.GetLeft(Snek);
-            if (dire % 4 == 0) x += 25;
-            else if (dire % 4 == 1) y += 25;
-            else if (dire % 4 == 2) x -= 25;
-            else if (dire % 4 == 3) y -= 25;
+            switch (dir%4)
+            {
+                case 0:
+                    x += 25;
+                    break;
+                case 1:
+                    y += 25;
+                    break;
+                case 2:
+                    x -= 25;
+                    break;
+                case 3:
+                    y -= 25;
+                    break;
+            }
             if (y == 450 || y == 0 || x == 450 || x == 0) end();
-                Canvas.SetLeft(Snek, x);
-                Canvas.SetBottom(Snek, y);
+            Canvas.SetLeft(Snek, x);
+            Canvas.SetBottom(Snek, y);
         }
+
+        
+        //utility functions
+        private void end()
+        {
+            yeet.Content = "Reset";
+            while (true) ;
+        }
+
+
+
+
+        private void new_food()
+        {
+            Random rnd = new Random();
+            
+            fx = rnd.Next(gridsize)*450/gridsize;
+            fy = rnd.Next(gridsize)*450/gridsize;
+            Food.Visibility = Visibility.Visible;
+            
+            Canvas.SetLeft(Food, fx);
+            Canvas.SetBottom(Food, fy);
+        }
+
+
+
+
+        private bool checkfood()//did i eat something?
+        {
+            /*if (y == fy && x == fx)*/
+            if(Canvas.GetBottom(Snek) == Canvas.GetBottom(Food) && Canvas.GetLeft(Snek) == Canvas.GetLeft(Food))
+                return true;
+            return false;
+        }
+
+
+
+
         //Direction keys:
         private void btn_right(object sender, RoutedEventArgs e)
         {
@@ -125,16 +182,6 @@ namespace Snake_game_t118e
         {
             if (!car)
                 dir = 3;
-        }
-        //utility functions
-        private void end()
-        {
-            yeet.Content = "Reset";
-            while (true) ;
-        }
-        static void new_food()
-        {
-
         }
     }
 }
