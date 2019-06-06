@@ -10,7 +10,7 @@
         <Canvas Background="LightGreen" Width="450" Height="450" Margin="0,0,122,19" Name="maal">
             <Rectangle Height="25" Width="25" Fill="Red" StrokeThickness="3" Stroke="Black" Canvas.Left="50" Canvas.Bottom="350" Name="Snek" Panel.ZIndex="10">
             </Rectangle>
-            <Ellipse Height="25" Width="25" Fill="Gold" StrokeThickness="3" Stroke="Orange" Canvas.Left="149" Canvas.Bottom="350" Name="Food" Panel.ZIndex="9" Canvas.Top="200" Visibility="Hidden">
+            <Ellipse Height="25" Width="25" Fill="Gold" StrokeThickness="3" Stroke="Orange" Canvas.Left="149" Canvas.Bottom="350" Name="Food" Panel.ZIndex="9" Canvas.Top="200" Visibility="Visible">
             </Ellipse>
             <Button Content="Up" Height="30" Canvas.Left="492" Canvas.Top="348" Width="30" RenderTransformOrigin="1.13,0.461" Click="btn_up"/>
             <Button Content="Down" Height="30" Canvas.Left="492" Canvas.Top="383" Width="30" RenderTransformOrigin="1.13,0.461" Click="btn_down"/>
@@ -19,5 +19,6 @@
             <Button Content="Togle'car'control" Height="30" Canvas.Left="457" Canvas.Top="313" Width="100" RenderTransformOrigin="1.13,0.461" Click="btn_cartgl"/>
             <Button Name="yeet"  Content="Start" Height="30" Canvas.Left="457" Canvas.Top="278" Width="100" RenderTransformOrigin="1.13,0.461" Click="btn_startsreset"/>
         </Canvas>
+        <TextBox HorizontalAlignment="Left" Height="30" Margin="455,244,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="100" Name="score_box"/>
     </Grid>
 </Window>

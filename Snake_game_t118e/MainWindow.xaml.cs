@@ -35,9 +35,10 @@ namespace Snake_game_t118e
         public void Timer_Tick(object sender, EventArgs e)
         {
             tick(dir);
-            if (Canvas.GetLeft(Snek) == Canvas.GetLeft(Food)&& Canvas.GetBottom(Snek) == Canvas.GetBottom(Food))//growth of the snake
+            if (Canvas.GetLeft(Snek) == Canvas.GetLeft(Food) && Canvas.GetBottom(Snek) == Canvas.GetBottom(Food))//growth of the snake
             {
-                Food.Visibility = Visibility.Visible;
+                score_box.Text += "12";
+                Food.Visibility = Visibility.Hidden;
             }
             
         }
@@ -79,6 +80,7 @@ namespace Snake_game_t118e
         {
             car = !car;
             if (car) dir = dir % 4 + 10000;
+
         }
 
         private void btn_startsreset(object sender, RoutedEventArgs e)
