@@ -94,7 +94,7 @@ namespace Snake_game_t118e
             else if (dire % 4 == 1) y += 25;
             else if (dire % 4 == 2) x -= 25;
             else if (dire % 4 == 3) y -= 25;
-            if (y > 450 || y < 0 || x > 450 || x < 0) end();
+            if (y == 450 || y == 0 || x == 450 || x == 0) end();
                 Canvas.SetLeft(Snek, x);
                 Canvas.SetBottom(Snek, y);
         }
