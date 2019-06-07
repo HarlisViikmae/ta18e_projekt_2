@@ -35,10 +35,8 @@ namespace Snake_game_t118e
             mov(dir);
             if (Canvas.GetBottom(Snek) == Canvas.GetBottom(Food) && Canvas.GetLeft(Snek) == Canvas.GetLeft(Food))
             {
-                length++;
                 score_box.Text = $"Score: {length}";
                 new_food();
-                growth();
             }
         }
 
@@ -237,15 +235,19 @@ namespace Snake_game_t118e
                     break;
             }
             if (y == 450 || y == -25 || x == 450 || x == -25 || tailf()) end();
-           /* if (length > 0)
+            if (checkfood())
+                growth();
+            if (recList.Count > 1)
+                for(int i = recList.Count; i > 0; i--)
                 {
-                    for(int i = length;  i > 0; i--)
-                    {
-                        Canvas.SetLeft(recList[i-1], Canvas.GetLeft(Snek));
-                        Canvas.SetBottom(recList[i-1], Canvas.GetBottom(Snek));
-                    }
-                }*/
-            
+                    Canvas.SetLeft(recList[i], Canvas.GetLeft(recList[i - 1]));
+                    Canvas.SetBottom(recList[i], Canvas.GetBottom(recList[i]));
+                }
+            if(recList.Count > 0){
+                Canvas.SetLeft(recList[0], Canvas.GetLeft(Snek));
+                Canvas.SetBottom(recList[0], Canvas.GetBottom(Snek));
+            }
+            if (y == 450 || y == -25 || x == 450 || x == -25 || tailf()) ;
             else
             {
                 Canvas.SetLeft(Snek, x);
