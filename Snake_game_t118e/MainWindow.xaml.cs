@@ -40,7 +40,6 @@ namespace Snake_game_t118e
                 new_food();
                 growth();
             }
-            
         }
 
         private DispatcherTimer timer;
@@ -165,8 +164,6 @@ namespace Snake_game_t118e
 
         }
 
-
-
         //Onsreen direction keys:
         private void btn_right(object sender, RoutedEventArgs e)
         {
@@ -240,6 +237,15 @@ namespace Snake_game_t118e
                     break;
             }
             if (y == 450 || y == -25 || x == 450 || x == -25 || tailf()) end();
+           /* if (length > 0)
+                {
+                    for(int i = length;  i > 0; i--)
+                    {
+                        Canvas.SetLeft(recList[i-1], Canvas.GetLeft(Snek));
+                        Canvas.SetBottom(recList[i-1], Canvas.GetBottom(Snek));
+                    }
+                }*/
+            
             else
             {
                 Canvas.SetLeft(Snek, x);
