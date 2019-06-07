@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Timers;
+using System.Threading;
 
 namespace Snake_game_t118e
 {
@@ -22,21 +23,16 @@ namespace Snake_game_t118e
     /// </summary>
     public partial class MainWindow : Window
     {
-        int dir = 0;
         bool car = false;
-        int length = 0, transrect = 0, difficulty = 5;
-        double x, y;
-        double fx = 0, fy = 0;
-        int gridsize = 18;
-        int foodgen = 5;
-        Rectangle[] recArray = new Rectangle[100];
+        int length = 0, gridsize = 18,dir = 0;
+        double x, y, fx = 0, fy = 0;
+
+
         List<Rectangle> recList = new List<Rectangle>();
 
-        public void Timer_Tick(object sender, EventArgs e)//tivck event *main
+        public void Timer_Tick(object sender, EventArgs e)//tick event *main
         {
-            tick(dir);
-            /*if (checkfood())
-                freeze();*/
+            mov(dir);
             if (Canvas.GetBottom(Snek) == Canvas.GetBottom(Food) && Canvas.GetLeft(Snek) == Canvas.GetLeft(Food))
             {
                 length++;
@@ -51,7 +47,6 @@ namespace Snake_game_t118e
         public MainWindow()//Setup
         {
             recList.Add(new Rectangle { Width = 25, Height = 25, Fill = Brushes.Red, StrokeThickness = 3, Stroke = Brushes.Black, });// kuidas reclist[i] asukohta muuta?
-
             SolidColorBrush gridder = new SolidColorBrush();
             gridder.Color = Color.FromArgb(255, 10, 200, 10);
             InitializeComponent();
@@ -86,10 +81,22 @@ namespace Snake_game_t118e
             if (car) dir = dir % 4 + 10000;
 
         }
+        bool rdy = true;
 
         private void btn_startsreset(object sender, RoutedEventArgs e)
         {
-            timer.Start();
+            if (rdy)
+            {
+                timer.Start();
+                yeet.Content = "Pause"; // sshoud = start rn
+                rdy = false;
+            }
+            else
+            {
+                timer.Stop();
+                yeet.Content = "Resume";
+                rdy = true;
+            }
             /*    List<Rectangle> recList = new List<Rectangle>();
                 for (var ix = 0; ix < 100; ix++)
                     recList.Add(new Rectangle { Width = 10, Height = 10, Fill = Brushes.Black });
@@ -106,75 +113,59 @@ namespace Snake_game_t118e
 
 
 
-        //Void tick
-        private void tick(int dire)
+
+        private bool tailf()
         {
-            y = Canvas.GetBottom(Snek);
-            x = Canvas.GetLeft(Snek);
-            switch (dir%4)
-            {
-                case 0:
-                    x += 25;
-                    break;
-                case 1:
-                    y += 25;
-                    break;
-                case 2:
-                    x -= 25;
-                    break;
-                case 3:
-                    y -= 25;
-                    break;
-            }
-            if (y == 450 || y == 0 || x == 450 || x == 0) end();
-            Canvas.SetLeft(Snek, x);
-           Canvas.SetBottom(Snek, y);
+            return false;
         }
 
         
         //utility functions
         private void end()
         {
-            yeet.Content = "Reset";
-            while (true) ;
-        }
-
-
-        private void freeze()
-        {
-            while (true) ;
-        }
-
-
-
-
-        private void new_food()
-        {
-            Random rnd = new Random();
+            timer.Stop();
+            timer.Stop();
+            Canvas.SetLeft(Snek, 50);
+            Canvas.SetBottom(Snek, 350);
+            //new_food();
+            length = 0;
             
-            fx = rnd.Next(gridsize)*450/gridsize;
-            fy = rnd.Next(gridsize)*450/gridsize;
-            Food.Visibility = Visibility.Visible;
-            
-            Canvas.SetLeft(Food, fx);
-            Canvas.SetBottom(Food, fy);
+            rdy = true;
+            yeet.Content = "Start";
+
         }
 
-
-
-
-        private bool checkfood()//did i eat something?
+        private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if(Canvas.GetBottom(Snek) == Canvas.GetBottom(Food) && Canvas.GetLeft(Snek) == Canvas.GetLeft(Food))
-                return true;
-            else
-                return false;
+            /*if (!rdy)
+            {
+                return;
+            }*/
+
+            switch (e.Key)
+            {
+                case Key.Up:
+                    dir = 1;
+                    break;
+                case Key.Down:
+                    dir = 3;
+                    break;
+                case Key.Left:
+                    dir = 2;
+                    break;
+                case Key.Right:
+                    dir = 0;
+                    break;
+                default:
+                    return;
+            }
+            Keyboard.ClearFocus();
+
         }
 
 
 
-
-        //Direction keys:
+        //Onsreen direction keys:
         private void btn_right(object sender, RoutedEventArgs e)
         {
             if (!car)
@@ -202,5 +193,57 @@ namespace Snake_game_t118e
             if (!car)
                 dir = 3;
         }
+
+
+        //Tootavad functsioonid.
+
+        private bool checkfood()//did i eat something?
+        {
+            if (Canvas.GetBottom(Snek) == Canvas.GetBottom(Food) && Canvas.GetLeft(Snek) == Canvas.GetLeft(Food))
+                return true;
+            else
+                return false;
+        }
+
+
+
+        private void new_food()
+        {
+            Random rnd = new Random();
+            fx = rnd.Next(gridsize) * 450 / gridsize;
+            fy = rnd.Next(gridsize) * 450 / gridsize;
+            Food.Visibility = Visibility.Visible;
+            Canvas.SetLeft(Food, fx);
+            Canvas.SetBottom(Food, fy);
+        }
+
+        //Void tick
+        private void mov(int dire)
+        {
+            y = Canvas.GetBottom(Snek);
+            x = Canvas.GetLeft(Snek);
+            switch (dir % 4)
+            {
+                case 0:
+                    x += 25;
+                    break;
+                case 1:
+                    y += 25;
+                    break;
+                case 2:
+                    x -= 25;
+                    break;
+                case 3:
+                    y -= 25;
+                    break;
+            }
+            if (y == 450 || y == -25 || x == 450 || x == -25 || tailf()) end();
+            else
+            {
+                Canvas.SetLeft(Snek, x);
+                Canvas.SetBottom(Snek, y);
+            }
+        }
+
     }
 }
