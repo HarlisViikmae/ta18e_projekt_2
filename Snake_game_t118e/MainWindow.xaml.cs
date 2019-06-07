@@ -24,21 +24,25 @@ namespace Snake_game_t118e
     {
         int dir = 0;
         bool car = false;
-        int length = 1, transrect = 0, difficulty = 5;
+        int length = 0, transrect = 0, difficulty = 5;
         double x, y;
         double fx = 0, fy = 0;
         int gridsize = 18;
-        int foodgen = 20;
+        int foodgen = 5;
         Rectangle[] recArray = new Rectangle[100];
         List<Rectangle> recList = new List<Rectangle>();
 
-        public void Timer_Tick(object sender, EventArgs e)
+        public void Timer_Tick(object sender, EventArgs e)//tivck event *main
         {
             tick(dir);
-            if (Canvas.GetLeft(Snek) == Canvas.GetLeft(Food) && Canvas.GetBottom(Snek) == Canvas.GetBottom(Food))//growth of the snake
+            /*if (checkfood())
+                freeze();*/
+            if (Canvas.GetBottom(Snek) == Canvas.GetBottom(Food) && Canvas.GetLeft(Snek) == Canvas.GetLeft(Food))
             {
-                score_box.Text += "12";
-                Food.Visibility = Visibility.Hidden;
+                length++;
+                score_box.Text = $"Score: {length}";
+                new_food();
+                growth();
             }
             
         }
@@ -95,6 +99,13 @@ namespace Snake_game_t118e
 
 
 
+        private void growth()
+        {
+            recList.Add(new Rectangle { Width = 25, Height = 25, Fill = Brushes.Black, StrokeThickness = 3, Stroke = Brushes.Red, });// kuidas reclist[i] asukohta muuta?
+        }
+
+
+
         //Void tick
         private void tick(int dire)
         {
@@ -117,7 +128,7 @@ namespace Snake_game_t118e
             }
             if (y == 450 || y == 0 || x == 450 || x == 0) end();
             Canvas.SetLeft(Snek, x);
-            Canvas.SetBottom(Snek, y);
+           Canvas.SetBottom(Snek, y);
         }
 
         
@@ -125,6 +136,12 @@ namespace Snake_game_t118e
         private void end()
         {
             yeet.Content = "Reset";
+            while (true) ;
+        }
+
+
+        private void freeze()
+        {
             while (true) ;
         }
 
@@ -148,10 +165,10 @@ namespace Snake_game_t118e
 
         private bool checkfood()//did i eat something?
         {
-            /*if (y == fy && x == fx)*/
             if(Canvas.GetBottom(Snek) == Canvas.GetBottom(Food) && Canvas.GetLeft(Snek) == Canvas.GetLeft(Food))
                 return true;
-            return false;
+            else
+                return false;
         }
 
 
