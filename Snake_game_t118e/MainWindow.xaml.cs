@@ -38,6 +38,7 @@ namespace Snake_game_t118e
                 score_box.Text = $"Score: {length}";
                 new_food();
             }
+            length = recList.Count;
         }
 
         private DispatcherTimer timer;
@@ -76,7 +77,6 @@ namespace Snake_game_t118e
         {
             car = !car;
             if (car) dir = dir % 4 + 10000;
-
         }
         bool rdy = true;
 
@@ -150,10 +150,16 @@ namespace Snake_game_t118e
                     dir = 3;
                     break;
                 case Key.Left:
-                    dir = 2;
+                    if (!car)
+                        dir = 2;
+                    else
+                        dir++;
                     break;
                 case Key.Right:
-                    dir = 0;
+                    if (!car)
+                        dir = 0;
+                    else
+                        dir--;
                     break;
                 default:
                     return;
