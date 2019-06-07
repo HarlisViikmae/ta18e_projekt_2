@@ -10,7 +10,7 @@
         <Canvas Background="LightGreen" Width="450" Height="450" Margin="0,0,122,19" Name="maal">
             <Rectangle Height="25" Width="25" Fill="Red" StrokeThickness="3" Stroke="Black" Canvas.Left="50" Canvas.Bottom="350" Name="Snek" Panel.ZIndex="10">
             </Rectangle>
-            <Ellipse Height="25" Width="25" Fill="Gold" StrokeThickness="3" Stroke="Orange" Canvas.Left="150" Canvas.Bottom="350" Name="Food" Panel.ZIndex="9" Visibility="Collapsed">
+            <Ellipse Height="25" Width="25" Fill="Gold" StrokeThickness="3" Stroke="Orange" Name="Food" Panel.ZIndex="9" Visibility="Collapsed">
             </Ellipse>
             <Button Focusable="False" Content="Up" Height="30" Canvas.Left="492" Canvas.Top="348" Width="30" RenderTransformOrigin="1.13,0.461" Click="btn_up"/>
             <Button Focusable="False" Content="Down" Height="30" Canvas.Left="492" Canvas.Top="383" Width="30" RenderTransformOrigin="1.13,0.461" Click="btn_down"/>

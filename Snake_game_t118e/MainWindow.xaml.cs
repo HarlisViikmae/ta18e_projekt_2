@@ -210,8 +210,8 @@ namespace Snake_game_t118e
         private void new_food()
         {
             Random rnd = new Random();
-            fx = rnd.Next(gridsize) * 450 / gridsize;
-            fy = rnd.Next(gridsize) * 450 / gridsize;
+            fx = rnd.Next(gridsize) * 450 / gridsize-25;
+            fy = rnd.Next(gridsize) * 450 / gridsize-25;
             Food.Visibility = Visibility.Visible;
             Canvas.SetLeft(Food, fx);
             Canvas.SetBottom(Food, fy);
