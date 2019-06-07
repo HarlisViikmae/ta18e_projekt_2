@@ -236,12 +236,15 @@ namespace Snake_game_t118e
             }
             if (y == 450 || y == -25 || x == 450 || x == -25 || tailf()) end();
             if (checkfood())
+            {
                 growth();
+                yeet.Content = $"Score: {recList.Count}";
+            }
             if (recList.Count > 1)
-                for(int i = recList.Count; i > 0; i--)
+                for(int i = recList.Count-1; i > 0; i--)
                 {
                     Canvas.SetLeft(recList[i], Canvas.GetLeft(recList[i - 1]));
-                    Canvas.SetBottom(recList[i], Canvas.GetBottom(recList[i]));
+                    Canvas.SetBottom(recList[i], Canvas.GetBottom(recList[i-1]));
                 }
             if(recList.Count > 0){
                 Canvas.SetLeft(recList[0], Canvas.GetLeft(Snek));
