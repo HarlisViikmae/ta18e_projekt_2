@@ -33,18 +33,21 @@ namespace Snake_game_t118e
         public void Timer_Tick(object sender, EventArgs e)//tick event *main
         {
             mov(dir);
-            if (Canvas.GetBottom(Snek) == Canvas.GetBottom(Food) && Canvas.GetLeft(Snek) == Canvas.GetLeft(Food))
+            if (checkfood())
             {
-                score_box.Text = $"Score: {length}";
-                new_food();
+                growth();
             }
             length = recList.Count;
+            score_box.Text = $"Score: {recList.Count}";
         }
 
         private DispatcherTimer timer;
         public MainWindow()//Setup
         {
-            recList.Add(new Rectangle { Width = 25, Height = 25, Fill = Brushes.Red, StrokeThickness = 3, Stroke = Brushes.Black, });// kuidas reclist[i] asukohta muuta?
+            recList.Add(new Rectangle { Width = 50, Height = 50, Fill = Brushes.Red, StrokeThickness = 3, Stroke = Brushes.Black });// kuidas reclist[i] asukohta muuta?
+            Panel.SetZIndex(recList[0], 5);
+            Canvas.SetBottom(recList[0], 250);
+            Canvas.SetLeft(recList[0], 250);
             SolidColorBrush gridder = new SolidColorBrush();
             gridder.Color = Color.FromArgb(255, 10, 200, 10);
             InitializeComponent();
@@ -242,11 +245,6 @@ namespace Snake_game_t118e
                     break;
             }
             if (y == 450 || y == -25 || x == 450 || x == -25 || tailf()) end();
-            if (checkfood())
-            {
-                growth();
-                yeet.Content = $"Score: {recList.Count}";
-            }
             if (recList.Count > 1)
                 for(int i = recList.Count-1; i > 0; i--)
                 {
