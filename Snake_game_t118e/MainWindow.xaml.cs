@@ -26,21 +26,15 @@ namespace Snake_game_t118e
         bool car = false;
         int length = 0, gridsize = 18,dir = 0;
         double x, y, fx = 0, fy = 0;
-
+        int tick = 0;
 
         List<Rectangle> recList = new List<Rectangle>();
 
         public void Timer_Tick(object sender, EventArgs e)//tick event *main
         {
             mov(dir);
-            if (checkfood())
-            {
-                growth();
-            }
-            length = recList.Count;
-            score_box.Text = $"Score: {recList.Count}";
+            tick++;
         }
-
         private DispatcherTimer timer;
         public MainWindow()//Setup
         {
@@ -75,54 +69,65 @@ namespace Snake_game_t118e
             }
 
         }
-
         private void btn_cartgl(object sender, RoutedEventArgs e)
         {
             car = !car;
             if (car) dir = dir % 4 + 10000;
         }
         bool rdy = true;
-
         private void btn_startsreset(object sender, RoutedEventArgs e)
         {
             if (rdy)
             {
+                recList.Clear();
                 timer.Start();
                 yeet.Content = "Pause"; // sshoud = start rn
                 new_food();
+                if (tick > 1) ;
+                else
+                {
+                    growth();
+                    growth();
+                }
                 dir = 0;
                 rdy = false;
             }
             else
             {
+                
                 timer.Stop();
                 yeet.Content = "Resume";
                 rdy = true;
             }
-            /*    List<Rectangle> recList = new List<Rectangle>();
-                for (var ix = 0; ix < 100; ix++)
-                    recList.Add(new Rectangle { Width = 10, Height = 10, Fill = Brushes.Black });
-            */
         }
-
-
-
-
+        private void snek0()
+        {
+            for (int i = 0; i < recList.Count; i++)
+                recList[i].Visibility = Visibility.Hidden;
+            recList.Clear();
+        }
         private void growth()
         {
-            recList.Add(new Rectangle { Width = 25, Height = 25, Fill = Brushes.Black, StrokeThickness = 3, Stroke = Brushes.Red,  Visibility = Visibility.Visible});// kuidas reclist[i] asukohta muuta?
+            Random rn = new Random();
+            byte r, g, b;
+            Convert.ToByte(rn.Next(150, 255));
+            r = Convert.ToByte(rn.Next(50, 255));
+            g = Convert.ToByte(rn.Next(50, 255));
+            b = Convert.ToByte(rn.Next(50, 255));
+            recList.Add(new Rectangle { Width = 25, Height = 25, Fill = new SolidColorBrush(Color.FromArgb(255,r,g,b)), StrokeThickness = 3, Stroke = Brushes.Black,  Visibility = Visibility.Visible});// kuidas reclist[i] asukohta muuta?
             maal.Children.Add(recList[recList.Count - 1]);
+            Canvas.SetLeft(recList[recList.Count - 1], -25);
+            Canvas.SetLeft(recList[recList.Count - 1], -25);
+
         }
-
-
-
-
         private bool tailf()
         {
+            for (int i = 0; i < recList.Count; i++)
+                if (Canvas.GetLeft(Snek) == Canvas.GetLeft(recList[i]) && Canvas.GetBottom(Snek) == Canvas.GetBottom(recList[i]))
+                    if (tick > 5)
+                        return true;
             return false;
         }
-
-        
         //utility functions
         private void end()
         {
@@ -132,7 +137,8 @@ namespace Snake_game_t118e
             Canvas.SetBottom(Snek, 350);
             //new_food();
             length = 0;
-            
+            snek0();
+            Food.Visibility = Visibility.Hidden;
             rdy = true;
             yeet.Content = "Start";
 
@@ -200,8 +206,6 @@ namespace Snake_game_t118e
             if (!car)
                 dir = 3;
         }
-
-
         //Tootavad functsioonid.
 
         private bool checkfood()//did i eat something?
@@ -212,8 +216,6 @@ namespace Snake_game_t118e
                 return false;
         }
 
-
-
         private void new_food()
         {
             Random rnd = new Random();
@@ -223,7 +225,6 @@ namespace Snake_game_t118e
             Canvas.SetLeft(Food, fx);
             Canvas.SetBottom(Food, fy);
         }
-
         //Void tick
         private void mov(int dire)
         {
@@ -244,27 +245,36 @@ namespace Snake_game_t118e
                     y -= 25;
                     break;
             }
-            if (y == 450 || y == -25 || x == 450 || x == -25 || tailf()) end();
+            if (checkfood())
+            {
+                growth();
+                new_food();
+            }
+            length = recList.Count;
+            if (recList.Count <= 2)
+                score_box.Text = $"Score: {0}";
+            score_box.Text = $"Score: {recList.Count-2}";
+            if (y == 450 || y == -25 || x == 450 || x == -25)end();
             if (recList.Count > 1)
                 for(int i = recList.Count-1; i > 0; i--)
                 {
-                    //Canvas.SetLeft(recList[i], Canvas.GetLeft(recList[i - 1]));
-                    //Canvas.SetBottom(recList[i], Canvas.GetBottom(recList[i-1]));
-                    Canvas.SetLeft(recList[0], 250);
-                    Canvas.SetBottom(recList[0], 250);
-
+                    Canvas.SetLeft(recList[i], Canvas.GetLeft(recList[i - 1]));
+                    Canvas.SetBottom(recList[i], Canvas.GetBottom(recList[i-1]));
                 }
+            
+                
             if(recList.Count > 0){
-                Canvas.SetLeft(recList[0], Canvas.GetLeft(Snek));
-                Canvas.SetBottom(recList[0], Canvas.GetBottom(Snek));
+                Canvas.SetLeft(recList[0],Canvas.GetLeft(Snek) );//Canvas.GetLeft(Snek));
+                Canvas.SetBottom(recList[0],Canvas.GetBottom(Snek) );//Canvas.GetBottom(Snek));
             }
-            if (y == 450 || y == -25 || x == 450 || x == -25 || tailf()) ;
+            if (y == 450 || y == -25 || x == 450 || x == -25) ;
             else
             {
                 Canvas.SetLeft(Snek, x);
                 Canvas.SetBottom(Snek, y);
             }
+            if (tailf())
+                end();
         }
-
     }
 }
