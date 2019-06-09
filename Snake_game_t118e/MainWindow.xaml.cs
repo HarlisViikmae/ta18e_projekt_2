@@ -107,7 +107,8 @@ namespace Snake_game_t118e
 
         private void growth()
         {
-            recList.Add(new Rectangle { Width = 25, Height = 25, Fill = Brushes.Black, StrokeThickness = 3, Stroke = Brushes.Red, });// kuidas reclist[i] asukohta muuta?
+            recList.Add(new Rectangle { Width = 25, Height = 25, Fill = Brushes.Black, StrokeThickness = 3, Stroke = Brushes.Red,  Visibility = Visibility.Visible});// kuidas reclist[i] asukohta muuta?
+            maal.Children.Add(recList[recList.Count - 1]);
         }
 
 
@@ -249,8 +250,11 @@ namespace Snake_game_t118e
             if (recList.Count > 1)
                 for(int i = recList.Count-1; i > 0; i--)
                 {
-                    Canvas.SetLeft(recList[i], Canvas.GetLeft(recList[i - 1]));
-                    Canvas.SetBottom(recList[i], Canvas.GetBottom(recList[i-1]));
+                    //Canvas.SetLeft(recList[i], Canvas.GetLeft(recList[i - 1]));
+                    //Canvas.SetBottom(recList[i], Canvas.GetBottom(recList[i-1]));
+                    Canvas.SetLeft(recList[0], 250);
+                    Canvas.SetBottom(recList[0], 250);
+
                 }
             if(recList.Count > 0){
                 Canvas.SetLeft(recList[0], Canvas.GetLeft(Snek));
