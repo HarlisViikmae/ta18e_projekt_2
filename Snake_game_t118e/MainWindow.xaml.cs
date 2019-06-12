@@ -38,10 +38,6 @@ namespace Snake_game_t118e
         private DispatcherTimer timer;
         public MainWindow()//Setup
         {
-            recList.Add(new Rectangle { Width = 50, Height = 50, Fill = Brushes.Red, StrokeThickness = 3, Stroke = Brushes.Black });// kuidas reclist[i] asukohta muuta?
-            Panel.SetZIndex(recList[0], 5);
-            Canvas.SetBottom(recList[0], 250);
-            Canvas.SetLeft(recList[0], 250);
             SolidColorBrush gridder = new SolidColorBrush();
             gridder.Color = Color.FromArgb(255, 10, 200, 10);
             InitializeComponent();
@@ -62,42 +58,50 @@ namespace Snake_game_t118e
                         Canvas.SetLeft(e, i * 50 + 25);
                     Canvas.SetTop(e, j * 25);
                 }
+            }
                 //Creating timer
                 timer = new DispatcherTimer();
                 timer.Interval = TimeSpan.FromSeconds(.2);
                 timer.Tick += Timer_Tick;
-            }
-
+            snek0();
         }
         private void btn_cartgl(object sender, RoutedEventArgs e)
         {
             car = !car;
             if (car) dir = dir % 4 + 10000;
         }
-        bool rdy = true;
+        int rdy = 1;
+        //1 = start
+        //2 = pause
+        //3 = resume
         private void btn_startsreset(object sender, RoutedEventArgs e)
         {
-            if (rdy)
+            if (rdy == 2|| rdy == 1)
             {
-                recList.Clear();
+                if (rdy == 1)
+                    dir = 0;
                 timer.Start();
                 yeet.Content = "Pause"; // sshoud = start rn
                 new_food();
                 if (tick > 1) ;
-                else
+                /*else
+                {
+                    growth();
+                    growth();
+                }*/
+                if(rdy == 1)
                 {
                     growth();
                     growth();
                 }
-                dir = 0;
-                rdy = false;
+                rdy = 3;
             }
             else
             {
                 
                 timer.Stop();
                 yeet.Content = "Resume";
-                rdy = true;
+                rdy = 2;
             }
         }
         private void snek0()
@@ -131,6 +135,8 @@ namespace Snake_game_t118e
         //utility functions
         private void end()
         {
+            growth();
+            growth();
             timer.Stop();
             timer.Stop();
             Canvas.SetLeft(Snek, 50);
@@ -139,7 +145,7 @@ namespace Snake_game_t118e
             length = 0;
             snek0();
             Food.Visibility = Visibility.Hidden;
-            rdy = true;
+            rdy = 1;
             yeet.Content = "Start";
 
         }
